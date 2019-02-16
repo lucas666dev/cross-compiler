@@ -8,6 +8,7 @@ DOCKER = docker
 # Platforms on which we want to build the project.
 PLATFORMS = \
 	android-arm \
+	android-arm64 \
 	android-x64 \
 	android-x86 \
 	darwin-x64 \
@@ -30,8 +31,22 @@ base:
 	$(DOCKER) build -t $(IMAGE):base .
 
 $(PLATFORMS): base
-	$(DOCKER) build -t $(IMAGE):$@ $@;
+	$(DOCKER) build -t $(IMAGE):$@ -f docker/$@.Dockerfile docker
 
 push:
 	docker tag cross-compiler:$(PLATFORM) $(PROJECT)/cross-compiler:$(PLATFORM)
 	docker push $(PROJECT)/cross-compiler:$(PLATFORM)
+
+push-all:
+	for i in $(PLATFORMS); do \
+		PLATFORM=$$i $(MAKE) push; \
+	done
+
+pull:
+	docker pull $(PROJECT)/cross-compiler:$(PLATFORM)
+	docker tag $(PROJECT)/cross-compiler:$(PLATFORM) cross-compiler:$(PLATFORM)
+
+pull-all:
+	for i in $(PLATFORMS); do \
+		PLATFORM=$$i $(MAKE) pull; \
+	done

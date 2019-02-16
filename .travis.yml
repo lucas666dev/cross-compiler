@@ -5,6 +5,7 @@ services:
 
 env:
   - PLATFORM=android-arm
+  - PLATFORM=android-arm64
   - PLATFORM=android-x64
   - PLATFORM=android-x86
   - PLATFORM=darwin-x64

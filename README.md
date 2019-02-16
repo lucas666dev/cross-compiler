@@ -18,7 +18,7 @@ Also adds CROSS_ROOT/bin in your PATH.
 
 ### Installed packages
 
-Based on Debian Jessie:
+Based on Debian Stretch:
 - bash
 - curl
 - wget
@@ -35,6 +35,7 @@ Based on Debian Jessie:
 - xz-utils
 - bzip2
 - gzip
+- unzip
 - file
 - rsync
 - sed
@@ -44,13 +45,14 @@ And a selection of platform specific packages (see below).
 
 ### Platforms built
 
-- android-arm (android-ndk with android-19, toolchain 4.9)
-- android-x64 (android-ndk with android-21, toolchain 4.9)
-- android-x86 (android-ndk with android-21, toolchain 4.9)
-- darwin-x64 (clang-3.7, llvm-3.7-dev, libtool, libxml2-dev, uuid-dev, libssl-dev patch make cpio)
-- linux-arm (gcc-4.7-arm-linux-gnueabihf with hardfp support for RaspberryPi)
-- linux-armv7 (gcc-4.9-arm-linux-gnueabihf)
-- linux-arm64 (aarch64-linux-gnu)
+- android-arm (android-ndk-r14b with api 19, clang)
+- android-arm64 (android-ndk-r14b with api 21, clang)
+- android-x64 (android-ndk-r14b with api 21, clang)
+- android-x86 (android-ndk-r14b with api 21, clang)
+- darwin-x64 (clang-4.0, llvm-4.0-dev, libtool, libxml2-dev, uuid-dev, libssl-dev patch make cpio)
+- linux-arm (gcc-4.8-arm-linux-gnueabihf with hardfp support for RaspberryPi)
+- linux-armv7 (gcc-6-arm-linux-gnueabihf)
+- linux-arm64 (aarch64-linux-gnu-gcc-6)
 - linux-x64
 - linux-x86 (gcc-multilib, g++-multilib)
 - windows-x64 (mingw-w64)
