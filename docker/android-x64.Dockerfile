@@ -8,7 +8,7 @@ ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
 RUN apt-get update && apt-get install -y python
 
-ENV NDK android-ndk-r18b
+ENV NDK android-ndk-r14b
 
 # Local testing, uncomment below and comment wget
 # COPY files/${NDK}-linux-x86_64.zip /build/
@@ -24,5 +24,4 @@ RUN set -ex && \
     cd / && rm -rf /build
 
 RUN cd ${CROSS_ROOT}/bin && \
-    ln -s ${CROSS_TRIPLE}-clang ${CROSS_TRIPLE}-cc && \
-    ln -s ${CROSS_TRIPLE}-clang++ ${CROSS_TRIPLE}-c++
+    ln -s ${CROSS_TRIPLE}-gcc ${CROSS_TRIPLE}-cc
