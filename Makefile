@@ -1,5 +1,5 @@
 # Name of the project.
-PROJECT = quasarhq
+PROJECT = i96751414
 IMAGE = cross-compiler
 
 # Set binaries and platform specific variables.
