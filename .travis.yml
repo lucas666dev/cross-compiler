@@ -21,6 +21,7 @@ before_script:
   - make base
 
 script:
+  - set -e
   - make $PLATFORM
   - |
     if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ]; then

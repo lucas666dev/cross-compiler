@@ -11,8 +11,8 @@ RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /
     curl http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update && \
     apt-get install -y --force-yes clang-4.0 llvm-4.0-dev automake autogen \
-                                   libtool libxml2-dev uuid-dev libssl-dev bash \
-                                   patch make tar xz-utils bzip2 gzip sed cpio
+                                   libtool lzma-dev libxml2-dev uuid-dev libssl-dev bash \
+                                   patch make cmake git tar xz-utils bzip2 gzip sed cpio
 
 RUN curl -L https://github.com/tpoechtrager/osxcross/archive/master.tar.gz | tar xz && \
     cd /osxcross-master/ && \
