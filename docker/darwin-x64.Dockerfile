@@ -20,7 +20,7 @@ RUN curl -L https://github.com/tpoechtrager/osxcross/archive/master.tar.gz | tar
       https://s3.amazonaws.com/beats-files/deps/MacOSX${MAC_SDK_VERSION}.sdk.tar.xz && \
     ln -s /usr/bin/clang-4.0 /usr/bin/clang && \
     ln -s /usr/bin/clang++-4.0 /usr/bin/clang++ && \
-    echo | SDK_VERSION=${MAC_SDK_VERSION} OSX_VERSION_MIN=10.7 UNATTENDED=1 ./build.sh && \
+    echo | SDK_VERSION=${MAC_SDK_VERSION} OSX_VERSION_MIN=10.10 UNATTENDED=1 ./build.sh && \
     mv /osxcross-master/target ${CROSS_ROOT} && \
     mkdir -p ${CROSS_ROOT}/lib && \
     cd / && rm -rf /osxcross-master
