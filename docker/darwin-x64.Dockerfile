@@ -10,9 +10,9 @@ ENV MAC_SDK_VERSION 10.11
 RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /etc/apt/sources.list && \
     curl http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update && \
-    apt-get install -y --force-yes clang-4.0 llvm-4.0-dev automake autogen \
-                                   libtool lzma-dev libxml2-dev uuid-dev libssl-dev bash \
-                                   patch make cmake git tar xz-utils bzip2 gzip sed cpio
+    apt-get install -y --force-yes clang-4.0 llvm-4.0-dev \
+                                   lzma-dev libxml2-dev uuid-dev libssl-dev \
+                                   patch git cpio
 
 RUN curl -L https://github.com/tpoechtrager/osxcross/archive/master.tar.gz | tar xz && \
     cd /osxcross-master/ && \
