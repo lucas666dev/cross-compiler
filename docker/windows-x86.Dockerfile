@@ -8,5 +8,10 @@ ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
+# Use POSIX threading model for MINGW
+# https://stackoverflow.com/questions/14191566/c-mutex-in-namespace-std-does-not-name-a-type/30849490
+RUN update-alternatives --set ${CROSS_TRIPLE}-gcc /usr/bin/${CROSS_TRIPLE}-gcc-posix && \
+    update-alternatives --set ${CROSS_TRIPLE}-g++ /usr/bin/${CROSS_TRIPLE}-g++-posix
+
 RUN cd /usr/bin && \
     ln -s ${CROSS_TRIPLE}-gcc ${CROSS_TRIPLE}-cc
