@@ -35,10 +35,13 @@ base:
 	$(DOCKER) build -t $(PROJECT)/$(IMAGE_PREFIX)-base:$(TAG) .
 
 $(PLATFORMS): base
-	$(DOCKER) build -t $(PROJECT)/$(IMAGE_PREFIX)-$@:$(TAG) --build-arg BASE_TAG=$(TAG) -f docker/$@.Dockerfile docker
+	$(DOCKER) build \
+		-t $(PROJECT)/$(IMAGE_PREFIX)-$@:$(TAG) \
+		-t $(PROJECT)/$(IMAGE_PREFIX)-$@:latest \
+		--build-arg BASE_TAG=$(TAG) -f docker/$@.Dockerfile docker
 
 push:
-	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):$(TAG)
+	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM)
 
 push-all:
 	for i in $(PLATFORMS); do \
