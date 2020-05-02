@@ -1,4 +1,5 @@
-FROM cross-compiler:base
+ARG BASE_TAG=latest
+FROM i96751414/cross-compiler-base:${BASE_TAG}
 
 RUN apt-get update && apt-get -y install crossbuild-essential-armhf
 

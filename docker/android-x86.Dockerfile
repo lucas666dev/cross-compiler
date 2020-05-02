@@ -1,4 +1,5 @@
-FROM cross-compiler:base
+ARG BASE_TAG=latest
+FROM i96751414/cross-compiler-base:${BASE_TAG}
 
 ENV CROSS_TRIPLE i686-linux-android
 ENV CROSS_ROOT /usr/${CROSS_TRIPLE}

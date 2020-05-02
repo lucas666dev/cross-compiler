@@ -1,6 +1,10 @@
 # Name of the project.
 PROJECT = i96751414
-IMAGE = cross-compiler
+IMAGE_PREFIX = cross-compiler
+TAG = $(shell $(GIT) describe --tags | cut -c2-)
+ifeq ($(TAG),)
+	TAG := dev
+endif
 
 # Set binaries and platform specific variables.
 DOCKER = docker
@@ -28,14 +32,13 @@ all:
 	done
 
 base:
-	$(DOCKER) build -t $(IMAGE):base .
+	$(DOCKER) build -t $(PROJECT)/$(IMAGE_PREFIX)-base:$(TAG) .
 
 $(PLATFORMS): base
-	$(DOCKER) build -t $(IMAGE):$@ -f docker/$@.Dockerfile docker
+	$(DOCKER) build -t $(PROJECT)/$(IMAGE_PREFIX)-$@:$(TAG) --build-arg BASE_TAG=$(TAG) -f docker/$@.Dockerfile docker
 
 push:
-	docker tag cross-compiler:$(PLATFORM) $(PROJECT)/cross-compiler:$(PLATFORM)
-	docker push $(PROJECT)/cross-compiler:$(PLATFORM)
+	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):$(TAG)
 
 push-all:
 	for i in $(PLATFORMS); do \
@@ -43,8 +46,7 @@ push-all:
 	done
 
 pull:
-	docker pull $(PROJECT)/cross-compiler:$(PLATFORM)
-	docker tag $(PROJECT)/cross-compiler:$(PLATFORM) cross-compiler:$(PLATFORM)
+	docker pull $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):$(TAG)
 
 pull-all:
 	for i in $(PLATFORMS); do \
