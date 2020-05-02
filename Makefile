@@ -1,7 +1,7 @@
 # Name of the project.
 PROJECT = i96751414
 IMAGE_PREFIX = cross-compiler
-TAG = $(shell $(GIT) describe --tags | cut -c2-)
+TAG = $(shell git describe --tags | cut -c2-)
 ifeq ($(TAG),)
 	TAG := dev
 endif
