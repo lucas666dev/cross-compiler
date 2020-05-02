@@ -49,7 +49,7 @@ push-all:
 	done
 
 pull:
-	docker pull $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):$(TAG)
+	docker pull $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):latest
 
 pull-all:
 	for i in $(PLATFORMS); do \
