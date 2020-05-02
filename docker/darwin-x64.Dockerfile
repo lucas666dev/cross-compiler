@@ -8,12 +8,14 @@ ENV LD_LIBRARY_PATH /usr/lib/llvm-4.0/lib:${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 ENV MAC_SDK_VERSION 10.11
 
+RUN apt-get install -y apt-transport-https
+
 RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /etc/apt/sources.list && \
-    curl http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+    wget --no-check-certificate -qO - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     apt-get update && \
-    apt-get install -y --force-yes clang-4.0 llvm-4.0-dev \
-                                   lzma-dev libxml2-dev uuid-dev libssl-dev \
-                                   patch git cpio
+    apt-get install -y clang-4.0 llvm-4.0-dev \
+                       lzma-dev libxml2-dev uuid-dev libssl-dev \
+                       patch git cpio
 
 RUN curl -L https://github.com/tpoechtrager/osxcross/archive/master.tar.gz | tar xz && \
     cd /osxcross-master/ && \
