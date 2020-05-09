@@ -1,19 +1,23 @@
 ARG BASE_TAG=latest
 FROM i96751414/cross-compiler-base:${BASE_TAG}
 
-RUN apt-get update && apt-get -y install crossbuild-essential-armhf
+RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
+    flex ncurses-dev gperf gawk texinfo help2man \
+    && apt-get clean --yes
 
-ENV CROSS_TRIPLE armv7-linux-gnueabihf
-ENV CROSS_ROOT /usr/${CROSS_TRIPLE}
+COPY \
+    scripts/install-crosstool-ng-toolchain.sh \
+    crosstool-ng/linux-armv7.config \
+    /cross/
+
+ENV XCC_PREFIX /usr/xcc
+# Build and install the toolchain, cleaning up artifacts afterwards.
+RUN cd /tmp \
+    && /cross/install-crosstool-ng-toolchain.sh -p "${XCC_PREFIX}" -c /cross/*.config \
+    && rm -rf /tmp/*
+
+ENV CROSS_TRIPLE armv7-unknown-linux-gnueabi
+ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
 ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
-
-RUN cd /usr/bin && \
-    ln -s arm-linux-gnueabihf-ar ${CROSS_TRIPLE}-ar && \
-    ln -s arm-linux-gnueabihf-gcc-6 ${CROSS_TRIPLE}-cc && \
-    ln -s arm-linux-gnueabihf-gcc-6 ${CROSS_TRIPLE}-gcc && \
-    ln -s arm-linux-gnueabihf-g++-6 ${CROSS_TRIPLE}-g++ && \
-    ln -s arm-linux-gnueabihf-g++-6 ${CROSS_TRIPLE}-c++ && \
-    ln -s arm-linux-gnueabihf-strip ${CROSS_TRIPLE}-strip && \
-    ln -s arm-linux-gnueabihf-ranlib ${CROSS_TRIPLE}-ranlib

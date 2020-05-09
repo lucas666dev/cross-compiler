@@ -13,11 +13,8 @@ ENV NDK android-ndk-r20
 ENV ANDROID_NDK_API 21
 ENV ANDROID_ARCH x86_64
 
-# Local testing, uncomment below and comment wget
-# COPY files/${NDK}-linux-x86_64.zip /build/
-
-COPY scripts/build_android_toolchain.sh /tmp
-RUN ./tmp/build_android_toolchain.sh
+COPY scripts/build_android_toolchain.sh /scripts/
+RUN ./scripts/build_android_toolchain.sh
 
 RUN cd ${CROSS_ROOT}/bin && \
     ln -s ${CROSS_TRIPLE}-clang ${CROSS_TRIPLE}-cc
