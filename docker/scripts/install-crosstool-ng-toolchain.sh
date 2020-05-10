@@ -83,4 +83,4 @@ cd "${BUILD}"
 cp "${CONFIG_PATH}" "${BUILD}/.config"
 
 # Build and install the toolchain!
-"${CTNG}/bin/ct-ng" build
+"${CTNG}/bin/ct-ng" build."$(nproc)"
