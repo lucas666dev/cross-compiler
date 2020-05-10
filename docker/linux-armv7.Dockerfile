@@ -2,7 +2,7 @@ ARG BASE_TAG=latest
 FROM i96751414/cross-compiler-base:${BASE_TAG}
 
 RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
-    flex ncurses-dev gperf gawk texinfo help2man \
+    flex ncurses-dev gperf gawk texinfo help2man python-dev \
     && apt-get clean --yes
 
 COPY \
