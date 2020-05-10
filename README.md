@@ -1,4 +1,4 @@
-cross-compiler [![Build Status](https://travis-ci.org/i96751414/cross-compiler.svg?branch=master)](https://travis-ci.org/i96751414/cross-compiler)
+cross-compiler [![Build Status](https://github.com/i96751414/cross-compiler/workflows/build/badge.svg)](https://github.com/i96751414/cross-compiler/actions)
 ==============
 
 C/C++ Cross compiling environment containers
@@ -51,7 +51,7 @@ And a selection of platform specific packages (see below).
 - android-x86 (android-ndk-r20 with api 21, clang)
 - darwin-x64 (clang-4.0, llvm-4.0-dev, libtool, libxml2-dev, uuid-dev, libssl-dev patch make cpio)
 - linux-arm (gcc-4.8-arm-linux-gnueabihf with hardfp support for RaspberryPi)
-- linux-armv7 (gcc-6-arm-linux-gnueabihf)
+- linux-armv7 (gcc-4.9.4 glibc-2.23 binutils-2.28 kernel-4.10.8 crosstool-ng)
 - linux-arm64 (aarch64-linux-gnu-gcc-6)
 - linux-x64
 - linux-x86 (gcc-multilib, g++-multilib)
