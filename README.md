@@ -25,6 +25,7 @@ Based on Debian Stretch:
 - pkg-config
 - build-essential
 - make
+- cmake
 - automake
 - autogen
 - libtool
@@ -36,6 +37,7 @@ Based on Debian Stretch:
 - bzip2
 - gzip
 - unzip
+- git
 - file
 - rsync
 - sed
