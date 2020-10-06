@@ -15,7 +15,7 @@ RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /
     apt-get update && \
     apt-get install -y clang-4.0 llvm-4.0-dev \
                        lzma-dev libxml2-dev uuid-dev libssl-dev \
-                       patch git cpio
+                       patch cpio
 
 RUN curl -L https://github.com/tpoechtrager/osxcross/archive/master.tar.gz | tar xz && \
     cd /osxcross-master/ && \
