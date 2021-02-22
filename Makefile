@@ -41,7 +41,8 @@ $(PLATFORMS): base
 		--build-arg BASE_TAG=$(TAG) -f docker/$@.Dockerfile docker
 
 push:
-	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM)
+	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):latest
+	docker push $(PROJECT)/$(IMAGE_PREFIX)-$(PLATFORM):$(TAG)
 
 push-all:
 	for i in $(PLATFORMS); do \
