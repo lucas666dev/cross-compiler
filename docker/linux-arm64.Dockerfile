@@ -2,18 +2,19 @@ ARG BASE_TAG=latest
 FROM i96751414/cross-compiler-base:${BASE_TAG}
 
 RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
-    flex ncurses-dev gperf gawk texinfo help2man python-dev \
-    && apt-get clean --yes
+        flex ncurses-dev gperf gawk texinfo help2man python-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY \
     scripts/install-crosstool-ng-toolchain.sh \
     crosstool-ng/linux-arm64.config \
-    /cross/
+    /tmp/
 
 ENV XCC_PREFIX /usr/xcc
 # Build and install the toolchain, cleaning up artifacts afterwards.
 RUN cd /tmp \
-    && /cross/install-crosstool-ng-toolchain.sh -p "${XCC_PREFIX}" -c /cross/*.config \
+    && /tmp/install-crosstool-ng-toolchain.sh -p "${XCC_PREFIX}" -c /tmp/*.config \
     && rm -rf /tmp/*
 
 ENV CROSS_TRIPLE aarch64-unknown-linux-gnueabi

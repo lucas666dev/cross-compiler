@@ -1,7 +1,9 @@
 ARG BASE_TAG=latest
 FROM i96751414/cross-compiler-base:${BASE_TAG}
 
-RUN apt-get update && apt-get -y install mingw-w64
+RUN apt-get update && apt-get install -y --no-install-recommends mingw-w64
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV CROSS_TRIPLE i686-w64-mingw32
 ENV CROSS_ROOT /usr/${CROSS_TRIPLE}
@@ -11,8 +13,7 @@ ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
 # Use POSIX threading model for MINGW
 # https://stackoverflow.com/questions/14191566/c-mutex-in-namespace-std-does-not-name-a-type/30849490
-RUN update-alternatives --set ${CROSS_TRIPLE}-gcc /usr/bin/${CROSS_TRIPLE}-gcc-posix && \
-    update-alternatives --set ${CROSS_TRIPLE}-g++ /usr/bin/${CROSS_TRIPLE}-g++-posix
+RUN update-alternatives --set "${CROSS_TRIPLE}-gcc" "/usr/bin/${CROSS_TRIPLE}-gcc-posix" \
+    && update-alternatives --set "${CROSS_TRIPLE}-g++" "/usr/bin/${CROSS_TRIPLE}-g++-posix"
 
-RUN cd /usr/bin && \
-    ln -s ${CROSS_TRIPLE}-gcc ${CROSS_TRIPLE}-cc
+RUN ln -s "/usr/bin/${CROSS_TRIPLE}-gcc" "/usr/bin/${CROSS_TRIPLE}-cc"

@@ -1,7 +1,7 @@
 FROM debian:stretch
 
-RUN apt-get update && apt-get -y install \
-    bash \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-transport-https gnupg ca-certificates \
     curl wget \
     pkg-config build-essential make cmake automake autogen libtool \
     libpcre3-dev bison yodl \
@@ -9,5 +9,6 @@ RUN apt-get update && apt-get -y install \
     git \
     file \
     rsync \
-    sed \
-    upx
+    upx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*

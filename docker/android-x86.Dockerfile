@@ -7,14 +7,16 @@ ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
-RUN apt-get update && apt-get install -y python
+RUN apt-get update && apt-get install -y --no-install-recommends python \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV NDK android-ndk-r20
 ENV ANDROID_NDK_API 21
 ENV ANDROID_ARCH x86
 
 COPY scripts/build_android_toolchain.sh /scripts/
-RUN ./scripts/build_android_toolchain.sh
+RUN ./scripts/build_android_toolchain.sh \
+    && rm -rf /scripts
 
-RUN cd ${CROSS_ROOT}/bin && \
-    ln -s ${CROSS_TRIPLE}-clang ${CROSS_TRIPLE}-cc
+RUN ln -s "${CROSS_ROOT}/bin/${CROSS_TRIPLE}-clang" "${CROSS_ROOT}/bin/${CROSS_TRIPLE}-cc"
