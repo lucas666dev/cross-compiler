@@ -3,7 +3,7 @@ set -eo pipefail
 
 # Our base directory is the current working directory. All local artifacts will
 # be generated underneath of here.
-ROOT=${PWD}
+ROOT=$(pwd)
 REV=367fb985bd770262a46fa9277db17429138ff985
 UPGRADE=false
 
@@ -52,11 +52,12 @@ set -x
 
 CTNG=${ROOT}/ct-ng
 mkdir -p "${CTNG}"
-cd "${CTNG}"
 
 # Download and install the "crosstool-ng" source.
-curl -# crosstool-ng.zip -L "https://github.com/crosstool-ng/crosstool-ng/archive/${REV}.tar.gz" | tar -xz
-cd "crosstool-ng-${REV}"
+CTNG_SRC="${CTNG}/crosstool-ng-src"
+mkdir -p "${CTNG_SRC}"
+curl -# -L "https://github.com/crosstool-ng/crosstool-ng/archive/${REV}.tar.gz" | tar -C "${CTNG_SRC}" --strip=1 -xz
+cd "${CTNG_SRC}"
 
 # Bootstrap and install the tool.
 ./bootstrap
