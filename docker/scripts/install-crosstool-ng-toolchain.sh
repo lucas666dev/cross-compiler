@@ -1,40 +1,40 @@
 #!/usr/bin/env bash
-
-# This script operates in a current working directory. It downloads
-# "crosstool-ng", installs the base package, and then configures and installs
-# a toolchain based on the supplied prefix and configuration.
-# More info at http://crosstool-ng.github.io/docs/
-#
-# Artifacts:
-# - "crosstool-ng" data in the current working directory (can be deleted).
-# - Configured Toolchain installed in the supplied <prefix>.
-
-set -xeo pipefail
+set -eo pipefail
 
 # Our base directory is the current working directory. All local artifacts will
 # be generated underneath of here.
 ROOT=${PWD}
+REV=367fb985bd770262a46fa9277db17429138ff985
+UPGRADE=false
 
-usage() {
-  echo "Usage: $0 -p <prefix> -c <config-path>" 1>&2
+function usage() {
+  cat <<EOF
+Usage: $(basename "${0}") -c <CONFIG_PATH> [OPTIONS]
+
+This script operates in the current working directory. It downloads
+"crosstool-ng", installs the base package, and then configures and installs
+a toolchain based on the supplied prefix and configuration.
+More info at http://crosstool-ng.github.io/docs/
+
+required arguments:
+  -c <config>   Configuration path
+  -r <rev>      Crosstool-ng revision (default: ${REV})
+
+optional arguments:
+  -p <prefix>   Installation prefix
+  -u            Upgrade the provided config before installing the toolchain
+  -h            Show this message
+EOF
   exit 1
 }
 
-# Resolve our input parameters.
-#
-# Note: we use "readlink" to resolve them to absolute paths so we can freely
-# change directories during installation.
-while getopts "p:c:" o; do
+while getopts "p:c:r:uh" o; do
   case "${o}" in
-  p)
-    CT_PREFIX=$(readlink -f "${OPTARG}")
-    ;;
-  c)
-    CONFIG_PATH=$(readlink -f "${OPTARG}")
-    ;;
-  *)
-    usage
-    ;;
+  p) CT_PREFIX=$(readlink -f "${OPTARG}") ;;
+  c) CONFIG_PATH=$(readlink -f "${OPTARG}") ;;
+  r) REV=${OPTARG} ;;
+  u) UPGRADE=true ;;
+  *) usage ;;
   esac
 done
 shift $((OPTIND - 1))
@@ -43,6 +43,8 @@ if [ -z "${CONFIG_PATH}" ] || [ ! -f "${CONFIG_PATH}" ]; then
   echo "ERROR: Missing config path (-c)."
   usage
 fi
+
+set -x
 
 ##
 # Build "crosstool-ng".
@@ -53,9 +55,8 @@ mkdir -p "${CTNG}"
 cd "${CTNG}"
 
 # Download and install the "crosstool-ng" source.
-if [ -z "${REV}" ]; then REV=1.23.0; fi
-curl -# -L "https://github.com/crosstool-ng/crosstool-ng/archive/crosstool-ng-${REV}.tar.gz" | tar -xz
-cd "crosstool-ng-crosstool-ng-${REV}"
+curl -# crosstool-ng.zip -L "https://github.com/crosstool-ng/crosstool-ng/archive/${REV}.tar.gz" | tar -xz
+cd "crosstool-ng-${REV}"
 
 # Bootstrap and install the tool.
 ./bootstrap
@@ -69,7 +70,9 @@ rm -rf "$(pwd)"
 ##
 
 # Override installation prefix, since we want to define it externally.
-if [ -n "${CT_PREFIX}" ]; then export CT_PREFIX; fi
+if [ -n "${CT_PREFIX}" ]; then
+  export CT_PREFIX
+fi
 
 # Allow installation as root, since we aren't really worried about system
 # damage b/c we're running in a container and this saves us the trouble of
@@ -82,5 +85,11 @@ mkdir -p "${BUILD}"
 cd "${BUILD}"
 cp "${CONFIG_PATH}" "${BUILD}/.config"
 
-# Build and install the toolchain!
+# As mentioned in ct-ng config, need to unset LD_LIBRARY_PATH.
+unset LD_LIBRARY_PATH
+
+if [ "${UPGRADE}" == "true" ]; then
+  "${CTNG}/bin/ct-ng" upgradeconfig
+fi
+
 "${CTNG}/bin/ct-ng" build."$(nproc)"
