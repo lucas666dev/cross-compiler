@@ -54,8 +54,8 @@ And a selection of platform specific packages (see below).
 -   android-x86 (android-ndk-r20 with api 21, clang)
 -   darwin-x64 (clang-4.0, llvm-4.0-dev, libtool, libxml2-dev, uuid-dev, libssl-dev patch make cpio)
 -   linux-arm (gcc-4.8-arm-linux-gnueabihf with hardfp support for RaspberryPi)
--   linux-armv7 (gcc-4.9.4 glibc-2.23 binutils-2.28 kernel-4.10.8 crosstool-ng)
--   linux-arm64 (gcc-8.3.0 glibc-2.27 binutils-2.28 kernel-4.10.8 crosstool-ng)
+-   linux-armv7 (gcc-4.9.4 glibc-2.23 binutils-2.28.1 kernel-4.10.17 crosstool-ng)
+-   linux-arm64 (gcc-6.5.0 glibc-2.28 binutils-2.28.1 kernel-4.10.17 crosstool-ng)
 -   linux-x64
 -   linux-x86 (gcc-multilib, g++-multilib)
 -   windows-x64 (mingw-w64)
