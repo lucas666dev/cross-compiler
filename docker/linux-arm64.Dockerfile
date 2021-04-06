@@ -8,7 +8,7 @@ RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
 
 COPY \
     scripts/install-crosstool-ng-toolchain.sh \
-    crosstool-ng/linux-arm64.config \
+    crosstool-ng/linux-arm64.1.23.0.config \
     /tmp/
 
 ENV XCC_PREFIX /usr/xcc
@@ -17,7 +17,7 @@ RUN cd /tmp \
     && /tmp/install-crosstool-ng-toolchain.sh -p "${XCC_PREFIX}" -c /tmp/*.config \
     && rm -rf /tmp/*
 
-ENV CROSS_TRIPLE aarch64-unknown-linux-gnu
+ENV CROSS_TRIPLE aarch64-unknown-linux-gnueabi
 ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
 ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}

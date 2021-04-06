@@ -4,7 +4,7 @@ set -eo pipefail
 # Our base directory is the current working directory. All local artifacts will
 # be generated underneath of here.
 ROOT=$(pwd)
-REV=367fb985bd770262a46fa9277db17429138ff985
+REV=crosstool-ng-1.23.0
 UPGRADE=false
 
 function usage() {
@@ -58,6 +58,15 @@ CTNG_SRC="${CTNG}/crosstool-ng-src"
 mkdir -p "${CTNG_SRC}"
 curl -# -L "https://github.com/crosstool-ng/crosstool-ng/archive/${REV}.tar.gz" | tar -C "${CTNG_SRC}" --strip=1 -xz
 cd "${CTNG_SRC}"
+
+# Fix for expat in old crosstool-ng versions
+# shellcheck disable=SC2016
+OUTDATED_EXPAT='http://downloads.sourceforge.net/project/expat/expat/${CT_EXPAT_VERSION}'
+# shellcheck disable=SC2016
+UPDATED_EXPAT='https://github.com/libexpat/libexpat/releases/download/R_${CT_EXPAT_VERSION//./_}'
+if [ -f "scripts/build/companion_libs/210-expat.sh" ]; then
+  sed -i "s|${OUTDATED_EXPAT}|${UPDATED_EXPAT}|" "scripts/build/companion_libs/210-expat.sh"
+fi
 
 # Bootstrap and install the tool.
 ./bootstrap

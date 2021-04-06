@@ -8,7 +8,7 @@ RUN apt-get update --yes && apt-get install --no-install-recommends --yes \
 
 COPY \
     scripts/install-crosstool-ng-toolchain.sh \
-    crosstool-ng/linux-armv7.config \
+    crosstool-ng/linux-armv7.1.23.0.config \
     /tmp/
 
 ENV XCC_PREFIX /usr/xcc
