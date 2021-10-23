@@ -12,6 +12,9 @@ ENV CROSS_ROOT /usr/i686-linux-gnu
 ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
+ENV CMAKE_TOOLCHAIN_FILE /home/linux.cmake
+
+COPY cmake/linux.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
 COPY "scripts/${CROSS_TRIPLE}.sh" "/usr/bin/${CROSS_TRIPLE}.sh"
 RUN mkdir -p ${CROSS_ROOT} \
