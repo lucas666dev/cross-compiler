@@ -10,6 +10,9 @@ ENV CROSS_ROOT /usr/${CROSS_TRIPLE}
 ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
+ENV CMAKE_TOOLCHAIN_FILE /home/mingw.cmake
+
+COPY cmake/mingw.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
 # Use POSIX threading model for MINGW
 # https://stackoverflow.com/questions/14191566/c-mutex-in-namespace-std-does-not-name-a-type/30849490
