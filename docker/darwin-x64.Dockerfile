@@ -7,6 +7,9 @@ ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH /usr/lib/llvm-4.0/lib:${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 ENV MAC_SDK_VERSION 10.13
+ENV CMAKE_TOOLCHAIN_FILE /home/darwin.cmake
+
+COPY cmake/darwin.cmake "${CMAKE_TOOLCHAIN_FILE}"
 
 RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /etc/apt/sources.list \
     && wget --no-check-certificate -qO - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
