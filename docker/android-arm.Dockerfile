@@ -7,6 +7,12 @@ ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH ${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 
+ENV SYSTEM_PROCESSOR armv7-a
+ENV ANDROID_ARCH_ABI armeabi-v7a
+ENV CMAKE_TOOLCHAIN_FILE /home/android.cmake
+
+COPY cmake/android.cmake "${CMAKE_TOOLCHAIN_FILE}"
+
 RUN apt-get update && apt-get install -y --no-install-recommends python \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
