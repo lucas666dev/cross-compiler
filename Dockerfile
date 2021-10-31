@@ -15,11 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh" \
-        --no-check-certificate -qO /tmp/cmake-install.sh \
-    && chmod +x /tmp/cmake-install.sh \
-    && mkdir /usr/bin/cmake \
-    && /tmp/cmake-install.sh --skip-license --prefix=/usr/bin/cmake \
-    && rm /tmp/*
+RUN wget "https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.tar.gz" \
+    --no-check-certificate -qO- | tar --strip-components=1 -xz --one-top-level=/usr/bin/cmake
 
 ENV PATH="/usr/bin/cmake/bin:${PATH}"
