@@ -7,7 +7,7 @@ set(CMAKE_Fortran_COMPILER $ENV{CROSS_TRIPLE}-gfortran)
 set(CMAKE_RC_COMPILER $ENV{CROSS_TRIPLE}-windres)
 
 # target environment on the build host system
-set(CMAKE_FIND_ROOT_PATH  $ENV{CROSS_ROOT})
+set(CMAKE_FIND_ROOT_PATH $ENV{CROSS_ROOT})
 
 # modify default behavior of FIND_XXX() commands
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

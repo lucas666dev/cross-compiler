@@ -1,7 +1,7 @@
 set(CMAKE_SYSTEM_NAME Darwin)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden -fvisibility-inlines-hidden")
+set(CMAKE_C_FLAGS_INIT "-fvisibility=hidden -fvisibility-inlines-hidden")
+set(CMAKE_CXX_FLAGS_INIT "-fvisibility=hidden -fvisibility-inlines-hidden")
 
 set(CMAKE_C_COMPILER $ENV{CROSS_TRIPLE}-clang)
 set(CMAKE_CXX_COMPILER $ENV{CROSS_TRIPLE}-clang++)
