@@ -27,7 +27,7 @@ RUN mkdir -p /tmp/osxcross \
         "https://github.com/i96751414/MacOSX-SDKs/raw/master/MacOSX${MAC_SDK_VERSION}.sdk.tar.xz" \
     && ln -s /usr/bin/clang-4.0 /usr/bin/clang \
     && ln -s /usr/bin/clang++-4.0 /usr/bin/clang++ \
-    && SDK_VERSION=${MAC_SDK_VERSION} OSX_VERSION_MIN=10.10 UNATTENDED=1 /tmp/osxcross/build.sh \
+    && SDK_VERSION=${MAC_SDK_VERSION} OSX_VERSION_MIN=10.9 UNATTENDED=1 /tmp/osxcross/build.sh \
     && mv /tmp/osxcross/target "${CROSS_ROOT}" \
     && mkdir -p "${CROSS_ROOT}/lib" \
     && rm -rf /tmp/osxcross
