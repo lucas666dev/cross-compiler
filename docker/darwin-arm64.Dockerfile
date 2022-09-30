@@ -8,14 +8,20 @@ ENV LD_LIBRARY_PATH /usr/lib/llvm-4.0/lib:${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}
 ENV PKG_CONFIG_PATH ${CROSS_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH}
 ENV MAC_SDK_VERSION 12.3
 ENV CMAKE_TOOLCHAIN_FILE /home/darwin.cmake
+ENV LLVM_VERSION 7ca7a2547f00e34f5ec91be776a1d0bbca74b7a9
 
 COPY cmake/darwin.cmake "${CMAKE_TOOLCHAIN_FILE}"
+
+
+COPY scripts/build_llvm.sh /scripts/
+RUN ./scripts/build_llvm.sh \
+    && rm -rf /scripts
+
 
 RUN echo "deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main" >> /etc/apt/sources.list \
     && wget --no-check-certificate -qO - http://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        clang-4.0 llvm-4.0-dev \
         lzma-dev libxml2-dev uuid-dev libssl-dev \
         python3 patch cpio \
     && apt-get clean \
