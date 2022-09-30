@@ -1,5 +1,5 @@
 # Name of the project.
-PROJECT = i96751414
+PROJECT = lucas666dev
 IMAGE_PREFIX = cross-compiler
 TAG = $(shell git describe --tags | cut -c2-)
 ifeq ($(TAG),)
@@ -16,6 +16,7 @@ PLATFORMS = \
 	android-x64 \
 	android-x86 \
 	darwin-x64 \
+	darwin-arm64 \
 	linux-arm \
 	linux-armv7 \
 	linux-arm64 \
