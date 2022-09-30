@@ -1,7 +1,7 @@
 ARG BASE_TAG=latest
-FROM i96751414/cross-compiler-base:${BASE_TAG}
+FROM lucas666dev/cross-compiler-base:${BASE_TAG}
 
-ENV CROSS_TRIPLE amd64-apple-darwin17
+ENV CROSS_TRIPLE arm64-apple-darwin17
 ENV CROSS_ROOT /usr/${CROSS_TRIPLE}
 ENV PATH ${PATH}:${CROSS_ROOT}/bin
 ENV LD_LIBRARY_PATH /usr/lib/llvm-4.0/lib:${CROSS_ROOT}/lib:${LD_LIBRARY_PATH}

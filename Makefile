@@ -33,10 +33,10 @@ all:
 	done
 
 base:
-	$(DOCKER) build -t $(PROJECT)/$(IMAGE_PREFIX)-base:$(TAG) .
+	$(DOCKER) build --platform linux/x86_64 -t $(PROJECT)/$(IMAGE_PREFIX)-base:$(TAG) .
 
 $(PLATFORMS): base
-	$(DOCKER) build \
+	$(DOCKER) build --platform linux/x86_64 \
 		-t $(PROJECT)/$(IMAGE_PREFIX)-$@:$(TAG) \
 		-t $(PROJECT)/$(IMAGE_PREFIX)-$@:latest \
 		--build-arg BASE_TAG=$(TAG) -f docker/$@.Dockerfile docker
